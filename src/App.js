@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, Container, Divider } from "@mui/material";
+import React from "react";
+import BookItem from "./components/BookItem";
+import SearchField from "./components/SearchField";
+import Header from "./components/Header";
+import { useBooks } from "./useBooks";
+import FiltersDialog from "./components/FiltersDialog";
+
 
 function App() {
+  const {
+    books,
+    sorters,
+    categories,
+    priceBetween,
+    yearBetween,
+    search,
+    handleSearch,
+  } = useBooks();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container disableGutters maxWidth="sm">
+      <Header />
+      <StickyContainer>
+        <SearchField {...{ search, handleSearch }} />
+        <FiltersDialog {...{ sorters, categories, priceBetween, yearBetween }} />
+      </StickyContainer>
+      <Divider />
+      {/* show list of books */}
+      <Container maxWidth="sm">
+        {books.map((book) => (
+          <BookItem {...{ book, key: book.title }} />
+        ))}
+      </Container>
+    </Container>
   );
+}
+
+function StickyContainer({children}) {
+  return (
+    <Box position="sticky" top={0} bgcolor="white" p={3} zIndex={100}>
+      {children}  
+    </Box>
+  )
 }
 
 export default App;
