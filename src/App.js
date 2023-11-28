@@ -1,4 +1,4 @@
-import { Box, Container, Divider } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 import BookItem from "./components/BookItem";
 import SearchField from "./components/SearchField";
@@ -25,7 +25,6 @@ function App() {
         <SearchField {...{ search, handleSearch }} />
         <FiltersDialog {...{ sorters, categories, priceBetween, yearBetween }} />
       </StickyContainer>
-      <Divider />
       {/* show list of books */}
       <Container maxWidth="sm">
         {books.map((book) => (
@@ -36,10 +35,18 @@ function App() {
   );
 }
 
-function StickyContainer({children}) {
+function StickyContainer({ children }) {
   return (
-    <Box position="sticky" top={0} bgcolor="white" p={3} zIndex={100}>
-      {children}  
+    <Box
+      position="sticky"
+      top={0}
+      bgcolor="white"
+      p={3}
+      zIndex={100}
+      borderBottom={2}
+      borderColor="#1111"
+    >
+      {children}
     </Box>
   )
 }
